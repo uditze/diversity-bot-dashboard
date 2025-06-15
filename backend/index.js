@@ -9,17 +9,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// יצירת נקודת קצה (API Endpoint) ראשונה
-// היא תחזיר את סך כל התגובות שנשמרו במסד הנתונים
+// ENDPOINT 1: קבלת מדדים בסיסיים
 app.get('/api/metrics', async (req, res) => {
   try {
-    // ביצוע שאילתה לספירת כל השורות בטבלת 'responses'
     const { count, error } = await supabase
       .from('responses')
       .select('*', { count: 'exact', head: true });
 
     if (error) {
-      throw error; // זריקת השגיאה לבלוק ה-catch
+      throw error;
     }
 
     res.json({ totalInteractions: count });
@@ -28,6 +26,42 @@ app.get('/api/metrics', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch metrics' });
   }
 });
+
+// ✅ ENDPOINT 2 (חדש): קבלת רשימת כל השיחות
+app.get('/api/sessions', async (req, res) => {
+  try {
+    // שליפת כל הרשומות, מסודרות לפי הזמן האחרון
+    const { data, error } = await supabase
+      .from('responses')
+      .select('session_id, created_at')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      throw error;
+    }
+    
+    // יצירת רשימה של סשנים ייחודיים, כך שכל סשן יופיע פעם אחת בלבד
+    const uniqueSessions = [];
+    const seenSessionIds = new Set();
+
+    for (const response of data) {
+      if (!seenSessionIds.has(response.session_id)) {
+        seenSessionIds.add(response.session_id);
+        uniqueSessions.push({
+          session_id: response.session_id,
+          last_activity: response.created_at,
+        });
+      }
+    }
+
+    res.json(uniqueSessions);
+
+  } catch (error) {
+    console.error('Error fetching sessions:', error.message);
+    res.status(500).json({ error: 'Failed to fetch sessions' });
+  }
+});
+
 
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
