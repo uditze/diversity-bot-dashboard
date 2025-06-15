@@ -1,0 +1,17 @@
+{
+  "name": "diversity-bot-dashboard-backend",
+  "version": "1.0.0",
+  "description": "Backend server for the diversity bot dashboard",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "dotenv": "^16.0.3",
+    "cors": "^2.8.5",
+    "@supabase/supabase-js": "^2.44.2",
+    "openai": "^4.25.0"
+  }
+}
