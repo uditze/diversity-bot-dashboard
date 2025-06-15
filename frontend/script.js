@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function fetchMetrics() {
-  // הערה: נצטרך להגדיר את כתובת השרת האמיתית כשנפרוס את האתר ל-Render
-  const API_URL = 'http://localhost:3002'; // זוהי כתובת זמנית שלא תעבוד עד שנפרוס
+  // ✅ הכתובת המעודכנת של שרת הבאקאנד שלך
+  const API_URL = 'https://dashboard-backend-l9uh.onrender.com';
 
   const metricsContainer = document.getElementById('metrics-container');
 
@@ -14,7 +14,7 @@ async function fetchMetrics() {
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
-
+    
     metricsContainer.innerHTML = `
       <h2>סה"כ אינטראקציות שנשמרו: <strong>${data.totalInteractions}</strong></h2>
     `;
