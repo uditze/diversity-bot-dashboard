@@ -6,7 +6,14 @@ import { supabase } from './supabaseClient.js';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+
+// ✅ הגדרות CORS מעודכנות
+// כאן אנו אומרים לשרת לאשר בקשות שמגיעות מהכתובת של אתר הדשבורד שלנו
+const corsOptions = {
+  origin: 'https://diversity-bot-dashboard.onrender.com' 
+};
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 // ENDPOINT 1: קבלת מדדים בסיסיים
@@ -53,20 +60,19 @@ app.get('/api/sessions', async (req, res) => {
   }
 });
 
-// ✅ ENDPOINT 3 (חדש): קבלת כל ההודעות של שיחה ספציפית
+// ENDPOINT 3: קבלת כל ההודעות של שיחה ספציפית
 app.get('/api/sessions/:sessionId', async (req, res) => {
   try {
-    const { sessionId } = req.params; // קבלת המזהה מה-URL
+    const { sessionId } = req.params;
 
     const { data, error } = await supabase
       .from('responses')
-      .select('*') // שלוף את כל העמודות
-      .eq('session_id', sessionId) // סנן לפי המזהה שהתקבל
-      .order('created_at', { ascending: true }); // סדר לפי סדר כרונולוגי
+      .select('*')
+      .eq('session_id', sessionId)
+      .order('created_at', { ascending: true });
 
     if (error) throw error;
-
-    res.json(data); // החזר את כל ההודעות של השיחה
+    res.json(data);
 
   } catch (error) {
     console.error(`Error fetching session ${req.params.sessionId}:`, error.message);
