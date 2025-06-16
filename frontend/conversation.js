@@ -16,7 +16,9 @@ async function fetchAndDisplayConversation(sessionId) {
   const container = document.getElementById('chat-view-container');
 
   try {
-    const response = await fetch(`<span class="math-inline">\{API\_URL\}/api/sessions/</span>{sessionId}`);
+    // ✅ תיקון התחביר של שורת ה-fetch
+    const response = await fetch(`${API_URL}/api/sessions/${sessionId}`);
+    
     if (!response.ok) throw new Error('Failed to fetch conversation');
 
     const messages = await response.json();
