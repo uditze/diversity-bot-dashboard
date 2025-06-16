@@ -53,6 +53,27 @@ app.get('/api/sessions', async (req, res) => {
   }
 });
 
+// ✅ ENDPOINT 3 (חדש): קבלת כל ההודעות של שיחה ספציפית
+app.get('/api/sessions/:sessionId', async (req, res) => {
+  try {
+    const { sessionId } = req.params; // קבלת המזהה מה-URL
+
+    const { data, error } = await supabase
+      .from('responses')
+      .select('*') // שלוף את כל העמודות
+      .eq('session_id', sessionId) // סנן לפי המזהה שהתקבל
+      .order('created_at', { ascending: true }); // סדר לפי סדר כרונולוגי
+
+    if (error) throw error;
+
+    res.json(data); // החזר את כל ההודעות של השיחה
+
+  } catch (error) {
+    console.error(`Error fetching session ${req.params.sessionId}:`, error.message);
+    res.status(500).json({ error: 'Failed to fetch session data' });
+  }
+});
+
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
   console.log(`Dashboard server running on port ${PORT}`);
