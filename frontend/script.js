@@ -1,10 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // קריאה לשתי הפונקציות בעת טעינת הדף
   fetchMetrics();
   fetchSessions();
 });
 
-// פונקציה זו נשארת כפי שהייתה
+// פונקציה לקבלת מדדים (ללא שינוי)
 async function fetchMetrics() {
   const API_URL = 'https://dashboard-backend-l9uh.onrender.com';
   const metricsContainer = document.getElementById('metrics-container');
@@ -21,7 +20,7 @@ async function fetchMetrics() {
   }
 }
 
-// ✅ פונקציה חדשה לשליפת רשימת השיחות
+// ✅ פונקציה מעודכנת לשליפת רשימת השיחות
 async function fetchSessions() {
   const API_URL = 'https://dashboard-backend-l9uh.onrender.com';
   const sessionsContainer = document.getElementById('sessions-list-container');
@@ -35,12 +34,19 @@ async function fetchSessions() {
       return;
     }
 
-    // יצירת רשימה של השיחות
-    let sessionsHtml = '<ul>';
+    // יצירת רשימת קישורים לכל שיחה
+    let sessionsHtml = '<ul class="sessions-list">';
     for (const session of sessions) {
-      // פורמט יפה יותר לתאריך
       const formattedDate = new Date(session.last_activity).toLocaleString('he-IL');
-      sessionsHtml += `<li>שיחה מתאריך: ${formattedDate} (ID: ${session.session_id})</li>`;
+      
+      // יצירת קישור שפותח דף חדש ומעביר את מזהה השיחה ב-URL
+      sessionsHtml += `
+        <li>
+          <a href="conversation.html?session_id=${session.session_id}" target="_blank">
+            שיחה מתאריך: ${formattedDate}
+          </a>
+        </li>
+      `;
     }
     sessionsHtml += '</ul>';
     
