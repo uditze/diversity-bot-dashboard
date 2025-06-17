@@ -1,0 +1,55 @@
+[HEBREW]
+תרחיש 1 - חוק המואזין
+בבוקר השיעור אישרה הכנסת, בקריאה ראשונה, הצעת החוק הקוראת על איסור השמעת מואזין (מבוסס על הצעת חוק אמיתית). בפתח השיעור, התקיים דיון בנושא, כאשר חלק מהסטודנטים הביעו עמדות נחרצות בעד הצעד, מה שעורר תחושות תסכול אצל הסטודנטים המוסלמים. אלה אף נפגעו מעצם קיום הדיון בכיתה.
+כיצד לדעתך המרצה צריך לנהוג בשיעורים הבאים? האם עליו לוותר על העיסוק בסוגיה בשל המתיחות? במידה ולא, כיצד היית נוהג.ת?
+[ENGLISH]
+Scenario 1 - The Muezzin Law
+On the morning of the class, the Knesset approved in its first reading a bill to prohibit the broadcasting of the muezzin call to prayer (based on a real legislative proposal). At the beginning of the lesson, a discussion took place on the topic. Some students expressed strong support for the measure, which caused frustration among Muslim students. Some were even hurt by the mere fact that the discussion took place in class.
+How should the lecturer conduct the upcoming lessons? Should the lecturer avoid addressing this issue due to the tension? If not, how would you act?
+[ARABIC]
+السيناريو 1 - قانون المؤذن
+في صباح يوم الحصة، أقر الكنيست في القراءة الأولى مشروع قانون يمنع رفع الأذان عبر مكبرات الصوت (استنادًا إلى اقتراح قانون حقيقي). في بداية الحصة دار نقاش حول الموضوع، حيث أعرب بعض الطلاب عن تأييدهم الشديد لهذه الخطوة، مما أثار إحباطًا لدى الطلاب المسلمين. بعضهم تأذى حتى من مجرد وجود النقاش في الصف.
+كيف تعتقد أنه يجب على المحاضر التصرف في الدروس القادمة؟ هل عليه تجنب التطرق للموضوع بسبب التوتر؟ وإن لم يكن، فكيف كنت ستتصرف؟
+================================================================================
+[HEBREW]
+תרחיש 2 - סטריאוטיפ המוחלש
+בפקולטה ברפואה, הסטודנטים נדרשים לאבחן ולהציע טיפול למטופלים. אחת המתרגלות כתבה משימה ובה מקרה בוחן לניתוח עבור הסטודנטים. המקרה מתאר מטופל אתיופי שסובל מאיידס. סטודנטים אתיופים שקראו את הדוגמה לא הגישו את המשימה, ונקטו בשביתה איטלקית בקורס ועברו אותו בקושי. מנגד, המרצה שלא שמה לב לדוגמה ולתסכול של הסטודנטים, האשימה שהם חסרי מוטיבציה בקורס.
+מה לדעתך אפשר לעשות כדי להימנע ממקרים כאלה בעתיד?
+[ENGLISH]
+Scenario 2 - The Stereotype of the Marginalized
+In a medical faculty, students are required to diagnose and suggest treatment for patients. One of the teaching assistants prepared a case study for the students. The case described an Ethiopian patient suffering from AIDS. Ethiopian students who read the example did not submit the assignment, staged a slow-down protest in the course, and barely passed. Meanwhile, the lecturer, unaware of the example and the students’ frustration, blamed them for lack of motivation.
+What do you think can be done to prevent such situations in the future?
+[ARABIC]
+السيناريو 2 - صورة نمطية للمهمشين
+في كلية الطب، يُطلب من الطلاب تشخيص المرضى واقتراح العلاج. إحدى المعيدات أعدت حالة دراسية لتحليلها من قبل الطلاب، وتصف الحالة مريضًا إثيوبيًا مصابًا بالإيدز. الطلاب الإثيوبيون الذين قرأوا المثال لم يقدموا المهمة، ونفذوا إضرابًا بطيئًا في الدورة ونجحوا بالكاد. من ناحية أخرى، لم تلاحظ المحاضرة المثال أو إحباط الطلاب، واعتبرت أنهم يفتقرون إلى الدافعية.
+ما الذي يمكن فعله برأيك لتجنب مواقف كهذه في المستقبل؟
+================================================================================
+[HEBREW]
+תרחיש 3 - יחסי צוות עכורים במעבדה
+ד"ר לוי מנהלת מעבדת מחקר בכימיה הכוללת שמונה סטודנטים לתואר שני, חצי יהודים וחצי ערבים. בעקבות המתיחות הביטחונית, היחסים בין הקבוצות הדרדרו. סטודנטים שהיו עד לא מכבר ביחסים טובים, הפסיקו לברך זה את זה לשלום והיחסים הצטמצמו להיבטים קורקטיים של העבודה בלבד. ד"ר לוי מרגישה שהיחסים העכורים גם משליכים לרעה על העבודה, משום שבישיבות הצוות הסטודנטים הפסיקו לשתף לעומק, לבקר רעיונות ולהציע רעיונות חדשים.
+כיצד לדעתך ד"ר לוי צריכה לנהוג?
+[ENGLISH]
+Scenario 3 - Tense Team Relations in the Lab
+Dr. Levi runs a chemistry research lab with eight master’s students, half Jewish and half Arab. Due to rising political tensions, relations between the groups deteriorated. Students who previously got along stopped greeting each other and reduced their interaction to strictly work-related matters. Dr. Levi feels the poor relations are harming the work, as team meetings became shallow, with little idea exchange.
+How should Dr. Levi respond?
+[ARABIC]
+السيناريو 3 - علاقات متوترة في المختبر
+الدكتورة ليفي تدير مختبر أبحاث في الكيمياء فيه ثمانية طلاب ماجستير، نصفهم يهود والنصف الآخر عرب. 
+نتيجة التوترات السياسية، تدهورت العلاقات بين المجموعتين. الطلاب الذين كانوا على علاقة طيبة توقفوا عن إلقاء التحية، واقتصرت العلاقة على الأمور المهنية فقط. تشعر الدكتورة ليفي أن هذه الأجواء تؤثر سلبًا على العمل، حيث أصبحت الاجتماعات ضحلة ولا يتم تبادل الأفكار.
+كيف تعتقد أن على الدكتورة ليفى التصرف؟
+================================================================================
+[HEBREW]
+תרחיש 4 - הערות פוגעניות כלפי להט"בים
+בשיעור על פילוסופיה קלאסית במדעי המדינה, הסטודנטים נחשפים לטקסט של אפלטון. אחד הסטודנטים מעיר שסוקרטס תיאר את אפלטון כמי שנמשך לנערים. בתגובה אחד הסטודנטים מעיר "זו סטייה וזה אסור בדת". המרצה לא יודע מה לעשות והוא ממשיך בשיעור מבלי להתייחס לתגובה של הסטודנט. לאחר השיעור, סטודנטית אחרת, שנפגעה מההערה של הסטודנט, כותבת אימייל לראש החוג, בו היא מאשימה את המרצה בחוסר תגובה לגזענות בשיעור ואומרת שהיא לא רוצה להשתתף יותר בשיעור.
+איך לדעתך המרצה צריך לנהוג?
+[ENGLISH]
+Scenario 4 - Offensive Comments Toward LGBTQ Students
+In a political science class on classical philosophy, students are exposed to a text by Plato. One student comments that Socrates described Plato as being attracted to boys. Another student responds, “That’s perversion and it’s forbidden in our religion.” The lecturer does not respond and continues the class. After class, another student, hurt by the comment, sends an email to the department head accusing the lecturer of not addressing homophobia in class and stating she no longer wants to attend.
+How should the lecturer respond?
+[ARABIC]
+السيناريو 4 - تعليقات مهينة تجاه الطلاب المثليين
+في محاضرة حول الفلسفة الكلاسيكية في قسم العلوم السياسية، يطّلع الطلاب على نص لأفلاطون.
+يعلّق أحد الطلاب بأن سقراط وصف أفلاطون بأنه كان ينجذب إلى الفتيان.
+يرد طالب آخر قائلاً: "هذا انحراف وممنوع في ديننا". المحاضر لا يرد ويواصل الدرس.
+بعد الحصة، ترسل طالبة أخرى، تأثرت من التعليق، رسالة إلى رئيس القسم تتهم فيها المحاضر بعدم التصدي لرهاب المثلية وتعلن أنها لا ترغب في مواصلة حضور المحاضرات.
+كيف تعتقد أنه يجب على المحاضر التصرف؟
