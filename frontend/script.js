@@ -1,7 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // קריאה לשתי הפונקציות בעת טעינת הדף
+  // קריאה לפונקציות הקיימות בעת טעינת הדף
   fetchMetrics();
   fetchSessions();
+
+  // --- הפעלת הלוגיקה של טופס ה-AI ---
+  initializeAiAnalyzer();
 });
 
 // פונקציה לקבלת מדדים
@@ -51,4 +54,58 @@ async function fetchSessions() {
     console.error('Failed to fetch sessions:', error);
     sessionsContainer.innerHTML = `<p>שגיאה בטעינת רשימת השיחות.</p>`;
   }
+}
+
+// --- חדש: פונקציה המכילה את כל הלוגיקה של ניתוח ה-AI ---
+function initializeAiAnalyzer() {
+  const aiForm = document.getElementById('ai-analyzer-form');
+  const aiQuestionInput = document.getElementById('ai-question');
+  const aiResultContainer = document.getElementById('ai-result-container');
+  const aiSubmitButton = aiForm.querySelector('button');
+
+  aiForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); // מניעת רענון הדף
+
+    const question = aiQuestionInput.value.trim();
+    if (!question) {
+      aiResultContainer.textContent = 'נא להזין שאלה.';
+      return;
+    }
+
+    // שלב 1: הצגת חיווי טעינה למשתמש
+    aiResultContainer.innerHTML = '<p>מעבד את הבקשה... תהליך זה עשוי לקחת כדקה, נא להמתין.</p>';
+    aiSubmitButton.disabled = true;
+    aiSubmitButton.textContent = 'מנתח...';
+
+    const API_URL = 'https://dashboard-backend-l9uh.onrender.com';
+
+    try {
+      // שלב 2: שליחת השאלה לשרת
+      const response = await fetch(`${API_URL}/api/analyze`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ question: question }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'תקלה בשרת');
+      }
+
+      // שלב 3: הצלחה - הצגת התשובה שהתקבלה מה-AI
+      const data = await response.json();
+      aiResultContainer.textContent = data.analysis;
+
+    } catch (error) {
+      // שלב 4: כשלון - הצגת הודעת שגיאה
+      console.error('Failed to fetch AI analysis:', error);
+      aiResultContainer.textContent = `אירעה שגיאה: ${error.message}`;
+    } finally {
+      // שלב 5: החזרת הכפתור למצב פעיל, בין אם הבקשה הצליחה או נכשלה
+      aiSubmitButton.disabled = false;
+      aiSubmitButton.textContent = 'נתח תשובות';
+    }
+  });
 }
