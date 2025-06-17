@@ -20,25 +20,36 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 
-// ENDPOINT 1: קבלת מדדים בסיסיים (מורחב)
+// ENDPOINT 1: קבלת מדדים בסיסיים (מתוקן)
 app.get('/api/metrics', async (req, res) => {
   try {
-    // קבלת כל הרשומות לצורך חישובים
-    const { data, error } = await supabase.from('responses').select('session_id');
-    if (error) throw error;
+    // --- התיקון נמצא כאן ---
 
-    // 1. חישוב סך האינטראקציות (מספר השורות הכולל)
-    const totalInteractions = data.length;
+    // 1. חישוב סך האינטראקציות (הדרך היעילה)
+    const { count: totalInteractions, error: countError } = await supabase
+      .from('responses')
+      .select('*', { count: 'exact', head: true });
 
-    // 2. חישוב סך השיחות (מספר ה-session_id הייחודיים)
-    const uniqueSessionIds = new Set(data.map(item => item.session_id));
-    const totalSessions = uniqueSessionIds.size;
+    if (countError) throw countError;
+
+    // 2. חישוב סך השיחות (הדרך היעילה)
+    // שים לב: אנו משתמשים בפונקציה של מסד הנתונים כדי לספור מזהים ייחודיים
+    const { data: sessionsData, error: sessionsError } = await supabase.rpc('get_unique_session_count');
+    
+    if (sessionsError) {
+        // אם ה-RPC נכשל, נשתמש בדרך הגיבוי הישנה יותר
+        console.warn('RPC failed, falling back to client-side count. Error:', sessionsError.message);
+        const { data: fallbackData, error: fallbackError } = await supabase.from('responses').select('session_id');
+        if(fallbackError) throw fallbackError;
+        const totalSessions = new Set(fallbackData.map(item => item.session_id)).size;
+        res.json({ totalInteractions, totalSessions });
+        return;
+    }
+    
+    const totalSessions = sessionsData;
 
     // החזרת אובייקט עם שני הנתונים
-    res.json({ 
-      totalInteractions: totalInteractions,
-      totalSessions: totalSessions 
-    });
+    res.json({ totalInteractions, totalSessions });
 
   } catch (error) {
     console.error('Error fetching metrics:', error.message);
@@ -46,7 +57,7 @@ app.get('/api/metrics', async (req, res) => {
   }
 });
 
-// ENDPOINT 2: קבלת רשימת כל השיחות
+// שאר הקובץ נשאר זהה...
 app.get('/api/sessions', async (req, res) => {
   try {
     const { data, error } = await supabase.from('responses').select('session_id, created_at').order('created_at', { ascending: false });
@@ -74,7 +85,6 @@ app.get('/api/sessions', async (req, res) => {
   }
 });
 
-// שאר נקודות הקצה נשארות ללא שינוי
 app.get('/api/sessions/:sessionId', async (req, res) => {
   try {
     const { sessionId } = req.params;
@@ -132,7 +142,7 @@ app.post('/api/analyze', async (req, res) => {
     
   } catch (error) {
     console.error('Error in /api/analyze endpoint:', error.message);
-    res.status(500).json({ error: 'Failed to analyze responses' });
+    res.status(500).json({ error: 'Failed to fetch responses' });
   }
 });
 
