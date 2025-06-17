@@ -7,14 +7,12 @@ import { getAllScenarios } from './scenario-parser.js';
 
 dotenv.config();
 
-// --- הגדרת לקוח OpenAI ---
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
 const app = express();
 
-// הגדרות CORS
 const corsOptions = {
   origin: 'https://diversity-bot-dashboard.onrender.com'
 };
@@ -22,19 +20,33 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 
-// ENDPOINT 1: קבלת מדדים בסיסיים
+// ENDPOINT 1: קבלת מדדים בסיסיים (מורחב)
 app.get('/api/metrics', async (req, res) => {
   try {
-    const { count, error } = await supabase.from('responses').select('*', { count: 'exact', head: true });
+    // קבלת כל הרשומות לצורך חישובים
+    const { data, error } = await supabase.from('responses').select('session_id');
     if (error) throw error;
-    res.json({ totalInteractions: count });
+
+    // 1. חישוב סך האינטראקציות (מספר השורות הכולל)
+    const totalInteractions = data.length;
+
+    // 2. חישוב סך השיחות (מספר ה-session_id הייחודיים)
+    const uniqueSessionIds = new Set(data.map(item => item.session_id));
+    const totalSessions = uniqueSessionIds.size;
+
+    // החזרת אובייקט עם שני הנתונים
+    res.json({ 
+      totalInteractions: totalInteractions,
+      totalSessions: totalSessions 
+    });
+
   } catch (error) {
     console.error('Error fetching metrics:', error.message);
     res.status(500).json({ error: 'Failed to fetch metrics' });
   }
 });
 
-// ENDPOINT 2: קבלת רשימת כל השיחות (עם הגבלה ל-10)
+// ENDPOINT 2: קבלת רשימת כל השיחות
 app.get('/api/sessions', async (req, res) => {
   try {
     const { data, error } = await supabase.from('responses').select('session_id, created_at').order('created_at', { ascending: false });
@@ -62,7 +74,7 @@ app.get('/api/sessions', async (req, res) => {
   }
 });
 
-// ENDPOINT 3: קבלת כל ההודעות של שיחה ספציפית
+// שאר נקודות הקצה נשארות ללא שינוי
 app.get('/api/sessions/:sessionId', async (req, res) => {
   try {
     const { sessionId } = req.params;
@@ -75,7 +87,6 @@ app.get('/api/sessions/:sessionId', async (req, res) => {
   }
 });
 
-// ENDPOINT 4: קבלת כל התרחישים
 app.get('/api/scenarios', (req, res) => {
   try {
     const scenarios = getAllScenarios();
@@ -86,7 +97,6 @@ app.get('/api/scenarios', (req, res) => {
   }
 });
 
-// ENDPOINT 5: ניתוח תשובות
 app.post('/api/analyze', async (req, res) => {
   try {
     const { question } = req.body;
@@ -103,8 +113,7 @@ app.post('/api/analyze', async (req, res) => {
         dataForPrompt += `התגובות לתרחיש ${scenario.id + 1} (${scenario.he.substring(0, 50)}...):\n${responsesForScenario}\n\n`;
       }
     });
-
-    // --- כאן נמצא השינוי בהנחיה ---
+    
     const systemPrompt = `אתה עוזר מחקר המתמחה בניתוח נתונים איכותניים מתחום החינוך. עליך לענות על שאלת המשתמש אך ורק על סמך הנתונים המסופקים לך. אל תמציא מידע. סכם את הממצאים וכתוב את התשובה בעברית, בצורה ברורה ומובנית.
 חשוב מאוד: הקפד על פסקאות ברורות. השתמש ברווח של שורה (ירד שורה פעמיים) כדי להפריד בין נושאים שונים, נקודות עיקריות, או בין הדיון על תרחיש אחד למשנהו.`;
     
