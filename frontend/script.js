@@ -11,7 +11,6 @@ async function fetchMetrics() {
     const response = await fetch(`${API_URL}/api/metrics`);
     if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
-    // --- כאן נמצא השינוי בכותרת ---
     metricsContainer.innerHTML = `
       <h2>מספר האינטראקציות עם הבוט</h2>
       <strong class="metrics-number">${data.totalInteractions}</strong>
@@ -59,7 +58,13 @@ function initializeAiAnalyzer() {
     aiResultContainer.innerHTML = '';
     chatHistory.forEach(message => {
       const messageDiv = document.createElement('div');
-      messageDiv.className = `analyzer-message ${message.role === 'user' ? 'analyzer-user' : 'analyzer-ai'}`;
+      
+      // --- כאן נמצא השינוי המרכזי ---
+      // חזרנו להשתמש בעיצוב הכללי של הודעות: user ו-bot
+      // התפקיד 'ai' יקבל את העיצוב של 'bot'
+      const roleClass = message.role === 'user' ? 'user' : 'bot';
+      messageDiv.className = `message ${roleClass}`;
+      
       messageDiv.textContent = message.content;
       aiResultContainer.appendChild(messageDiv);
     });
