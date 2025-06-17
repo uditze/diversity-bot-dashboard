@@ -20,6 +20,21 @@
     <p>טוען רשימת שיחות...</p>
   </div>
 
+  <hr>
+
+  <section id="ai-analyzer-section">
+    <h2>ניתוח תשובות משתמשים בעזרת AI</h2>
+    <div id="ai-analyzer-container">
+        <form id="ai-analyzer-form">
+            <label for="ai-question">שאל שאלה על כלל התשובות של המשתמשים:</label>
+            <textarea id="ai-question" name="ai-question" rows="3" placeholder="לדוגמה: מהן הדרכים הנפוצות בהן משתמשים מציעים להתמודד עם תרחיש 1?"></textarea>
+            <button type="submit">נתח תשובות</button>
+        </form>
+        <div id="ai-result-container">
+            </div>
+    </div>
+  </section>
+
   <script src="script.js" defer></script>
 </body>
 </html>
