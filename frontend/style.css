@@ -18,13 +18,22 @@ body {
     margin: 0 auto;
 }
 
-h1, h2, h3 {
-    text-align: center;
+h1, h2 {
+    font-family: 'Heebo', sans-serif;
+    font-weight: 700;
 }
 
 h1 {
     color: var(--main-green);
     margin-bottom: 2rem;
+    text-align: center;
+}
+
+h2 {
+    text-align: right;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
 }
 
 hr {
@@ -40,16 +49,21 @@ hr {
     align-items: flex-start;
 }
 
-.grid-item {
+/* עיצוב הטור הימני שיכיל את המדדים */
+#metrics-column {
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* רווח בין שני המדדים */
+}
+
+/* עיצוב משותף לכל תיבת מדד */
+.metric-box {
     background: var(--light-text);
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
-#metrics-container {
-    flex: 1;
-    min-width: 250px;
     text-align: center;
 }
 
@@ -58,18 +72,23 @@ hr {
     font-weight: 700;
     color: var(--main-green);
     display: block;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 
+/* עיצוב הטור השמאלי */
 #sessions-wrapper {
-    flex: 2; 
+    flex: 2;
     min-width: 400px;
+    background: var(--light-text);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 #sessions-list-container {
     max-height: 400px; 
     overflow-y: auto; 
-    padding-right: 1rem;
+    padding-left: 1rem; /* ריפוד ליד פס הגלילה */
 }
 
 .sessions-list {
@@ -149,8 +168,7 @@ hr {
     gap: 1rem;
 }
 
-/* --- הגדרות עיצוב כלליות לכל סוגי השיחות --- */
-.message, .analyzer-message {
+.message {
     padding: 0.75rem 1rem;
     border-radius: 16px;
     max-width: 90%;
