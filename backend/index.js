@@ -34,20 +34,31 @@ app.get('/api/metrics', async (req, res) => {
   }
 });
 
-// ENDPOINT 2: קבלת רשימת כל השיחות
+// ENDPOINT 2: קבלת רשימת כל השיחות (עם הגבלה ל-10)
 app.get('/api/sessions', async (req, res) => {
   try {
     const { data, error } = await supabase.from('responses').select('session_id, created_at').order('created_at', { ascending: false });
     if (error) throw error;
+    
     const uniqueSessions = [];
     const seenSessionIds = new Set();
+
     for (const response of data) {
       if (!seenSessionIds.has(response.session_id)) {
         seenSessionIds.add(response.session_id);
-        uniqueSessions.push({ session_id: response.session_id, last_activity: response.created_at });
+        uniqueSessions.push({
+          session_id: response.session_id,
+          last_activity: response.created_at,
+        });
       }
     }
-    res.json(uniqueSessions);
+
+    // --- השינוי נמצא כאן ---
+    // חותכים את המערך כדי לקחת רק את 10 השיחות הראשונות (שהן האחרונות בזמן)
+    const limitedSessions = uniqueSessions.slice(0, 10);
+    
+    res.json(limitedSessions);
+
   } catch (error) {
     console.error('Error fetching sessions:', error.message);
     res.status(500).json({ error: 'Failed to fetch sessions' });
@@ -78,22 +89,16 @@ app.get('/api/scenarios', (req, res) => {
   }
 });
 
-// ENDPOINT 5: ניתוח תשובות (שלב 2 - חיבור ל-AI)
+// ENDPOINT 5: ניתוח תשובות
 app.post('/api/analyze', async (req, res) => {
   try {
-    const { question } = req.body; // קבלת השאלה מהפרונטאנד
+    const { question } = req.body;
     if (!question) {
       return res.status(400).json({ error: 'Question is required' });
     }
-
-    // 1. שליפת כל תגובות המשתמשים
     const { data: userResponses, error: dbError } = await supabase.from('responses').select('content, scenario_id').eq('role', 'user');
     if (dbError) throw dbError;
-
-    // 2. שליפת כל התרחישים כדי לתת הקשר
     const scenarios = getAllScenarios();
-
-    // 3. בניית ההנחיה (Prompt) למודל ה-AI
     let dataForPrompt = '';
     scenarios.forEach(scenario => {
       const responsesForScenario = userResponses.filter(r => r.scenario_id === scenario.id).map(r => `- ${r.content}`).join('\n');
@@ -101,11 +106,8 @@ app.post('/api/analyze', async (req, res) => {
         dataForPrompt += `התגובות לתרחיש ${scenario.id + 1} (${scenario.he.substring(0, 50)}...):\n${responsesForScenario}\n\n`;
       }
     });
-
     const systemPrompt = `אתה עוזר מחקר המתמחה בניתוח נתונים איכותניים מתחום החינוך. עליך לענות על שאלת המשתמש אך ורק על סמך הנתונים המסופקים לך. אל תמציא מידע. סכם את הממצאים וכתוב את התשובה בעברית, בצורה ברורה ומובנית.`;
     const userPrompt = `השאלה לניתוח היא: "${question}"\n\nלהלן הנתונים - אוסף תגובות של מרצים לתרחישים שונים:\n\n${dataForPrompt}`;
-
-    // 4. שליחת הבקשה ל-OpenAI
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
@@ -113,12 +115,8 @@ app.post('/api/analyze', async (req, res) => {
         { role: "user", content: userPrompt }
       ],
     });
-
     const analysisResult = completion.choices[0].message.content;
-
-    // 5. החזרת התשובה לפרונטאנד
     res.json({ analysis: analysisResult });
-
   } catch (error) {
     console.error('Error in /api/analyze endpoint:', error.message);
     res.status(500).json({ error: 'Failed to analyze responses' });
