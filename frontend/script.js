@@ -13,16 +13,13 @@ async function fetchMetrics() {
     const response = await fetch(`${API_URL}/api/metrics`);
     if (!response.ok) throw new Error('Network response was not ok');
     
-    // קבלת האובייקט המכיל את שני המדדים
     const data = await response.json();
 
-    // הצגת מספר השיחות בתיבה העליונה
     sessionCountContainer.innerHTML = `
       <h2>מספר שיחות של משתמשים עם הבוט</h2>
       <strong class="metrics-number">${data.totalSessions}</strong>
     `;
     
-    // הצגת מספר האינטראקציות בתיבה התחתונה
     interactionCountContainer.innerHTML = `
       <h2>מספר האינטראקציות עם הבוט</h2>
       <strong class="metrics-number">${data.totalInteractions}</strong>
@@ -30,8 +27,9 @@ async function fetchMetrics() {
 
   } catch (error) {
     const errorMessage = `<p>שגיאה בטעינת הנתונים.</p>`;
-    interactionCountContainer.innerHTML = errorMessage;
-    sessionCountContainer.innerHTML = errorMessage;
+    // ודא שהאלמנטים קיימים לפני שמנסים לשנות אותם
+    if(interactionCountContainer) interactionCountContainer.innerHTML = errorMessage;
+    if(sessionCountContainer) sessionCountContainer.innerHTML = errorMessage;
     console.error('Failed to fetch metrics:', error);
   }
 }
