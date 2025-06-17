@@ -52,11 +52,8 @@ app.get('/api/sessions', async (req, res) => {
         });
       }
     }
-
-    // --- השינוי נמצא כאן ---
-    // חותכים את המערך כדי לקחת רק את 10 השיחות הראשונות (שהן האחרונות בזמן)
-    const limitedSessions = uniqueSessions.slice(0, 10);
     
+    const limitedSessions = uniqueSessions.slice(0, 10);
     res.json(limitedSessions);
 
   } catch (error) {
@@ -106,8 +103,13 @@ app.post('/api/analyze', async (req, res) => {
         dataForPrompt += `התגובות לתרחיש ${scenario.id + 1} (${scenario.he.substring(0, 50)}...):\n${responsesForScenario}\n\n`;
       }
     });
-    const systemPrompt = `אתה עוזר מחקר המתמחה בניתוח נתונים איכותניים מתחום החינוך. עליך לענות על שאלת המשתמש אך ורק על סמך הנתונים המסופקים לך. אל תמציא מידע. סכם את הממצאים וכתוב את התשובה בעברית, בצורה ברורה ומובנית.`;
+
+    // --- כאן נמצא השינוי בהנחיה ---
+    const systemPrompt = `אתה עוזר מחקר המתמחה בניתוח נתונים איכותניים מתחום החינוך. עליך לענות על שאלת המשתמש אך ורק על סמך הנתונים המסופקים לך. אל תמציא מידע. סכם את הממצאים וכתוב את התשובה בעברית, בצורה ברורה ומובנית.
+חשוב מאוד: הקפד על פסקאות ברורות. השתמש ברווח של שורה (ירד שורה פעמיים) כדי להפריד בין נושאים שונים, נקודות עיקריות, או בין הדיון על תרחיש אחד למשנהו.`;
+    
     const userPrompt = `השאלה לניתוח היא: "${question}"\n\nלהלן הנתונים - אוסף תגובות של מרצים לתרחישים שונים:\n\n${dataForPrompt}`;
+    
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
@@ -115,8 +117,10 @@ app.post('/api/analyze', async (req, res) => {
         { role: "user", content: userPrompt }
       ],
     });
+    
     const analysisResult = completion.choices[0].message.content;
     res.json({ analysis: analysisResult });
+    
   } catch (error) {
     console.error('Error in /api/analyze endpoint:', error.message);
     res.status(500).json({ error: 'Failed to analyze responses' });
