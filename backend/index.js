@@ -91,6 +91,34 @@ app.get('/api/scenarios', (req, res) => {
   }
 });
 
+// ENDPOINT 5: ניתוח תשובות (שלב 1 - שליפת נתונים)
+app.post('/api/analyze', async (req, res) => {
+  try {
+    console.log("Received request to /api/analyze");
+
+    // שלב 1: שליפת כל התגובות של המשתמשים מהדאטהבייס
+    const { data: userResponses, error } = await supabase
+      .from('responses')
+      .select('content, scenario_id') // ניקח רק את התוכן והתרחיש
+      .eq('role', 'user'); // נסנן רק תגובות של משתמשים
+
+    if (error) {
+      throw error; // אם יש שגיאה בשליפה, נעצור כאן
+    }
+
+    // כרגע, רק נחזיר הודעה שהצלחנו לשלוף את הנתונים
+    // בשלב הבא נשלח את המידע הזה ל-OpenAI
+    res.json({
+      message: `Successfully retrieved ${userResponses.length} user responses. AI analysis will be implemented in the next step.`
+    });
+
+  } catch (error) {
+    console.error('Error in /api/analyze endpoint:', error.message);
+    res.status(500).json({ error: 'Failed to analyze responses' });
+  }
+});
+
+
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
   console.log(`Dashboard server running on port ${PORT}`);
