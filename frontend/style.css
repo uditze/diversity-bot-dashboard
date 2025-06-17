@@ -42,24 +42,20 @@ hr {
     margin: 2rem 0;
 }
 
-/* --- כאן נמצא תיקון הפריסה --- */
 .dashboard-grid {
     display: flex;
-    /* הסרנו את flex-wrap: wrap כדי שהטורים לא "ישברו" לשורות נפרדות */
     gap: 2rem;
     align-items: flex-start;
 }
 
-/* עיצוב הטור הימני שיכיל את המדדים */
 #metrics-column {
-    flex: 1; /* הטור הזה יתפוס שליש מהרוחב הזמין */
+    flex: 1;
     min-width: 250px;
     display: flex;
     flex-direction: column;
     gap: 2rem;
 }
 
-/* עיצוב משותף לכל תיבת מדד */
 .metric-box {
     background: var(--light-text);
     padding: 1.5rem;
@@ -76,9 +72,8 @@ hr {
     margin-top: 0.5rem;
 }
 
-/* עיצוב הטור השמאלי */
 #sessions-wrapper {
-    flex: 2; /* הטור הזה יתפוס שני שליש מהרוחב הזמין */
+    flex: 2;
     min-width: 400px;
     background: var(--light-text);
     padding: 1.5rem;
@@ -116,7 +111,6 @@ hr {
     transform: translateY(-2px);
 }
 
-/* שאר העיצובים נשארים זהים */
 #ai-analyzer-section {
     background-color: var(--light-text);
     padding: 2rem;
