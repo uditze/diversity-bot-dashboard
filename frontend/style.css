@@ -38,7 +38,7 @@ hr {
     margin: 2rem 0;
 }
 
-/* --- עיצוב המבנה הדו-טורי החדש --- */
+/* עיצוב המבנה הדו-טורי החדש */
 .dashboard-grid {
     display: flex;
     flex-wrap: wrap;
@@ -54,7 +54,7 @@ hr {
 }
 
 #metrics-container {
-    flex: 1; /* קח שליש מהרוחב */
+    flex: 1;
     min-width: 250px;
     text-align: center;
 }
@@ -68,17 +68,15 @@ hr {
 }
 
 #sessions-wrapper {
-    flex: 2; /* קח שני שליש מהרוחב */
+    flex: 2; 
     min-width: 400px;
 }
 
 #sessions-list-container {
     max-height: 400px; 
     overflow-y: auto; 
-    padding-right: 1rem; /* ריפוד קטן ליד פס הגלילה */
+    padding-right: 1rem;
 }
-/* --- סוף עיצוב המבנה --- */
-
 
 .sessions-list {
     list-style-type: none;
@@ -104,7 +102,7 @@ hr {
     transform: translateY(-2px);
 }
 
-/* עיצובים לתצוגת השיחה הפנימית (ללא שינוי) */
+/* עיצובים לתצוגת השיחה הפנימית */
 .chat-box {
     background: var(--light-text);
     border-radius: 16px;
@@ -120,7 +118,15 @@ hr {
     background: #e6f3f3;
 }
 
-/* עיצובים לאזור ניתוח ה-AI (ללא שינוי מבני) */
+.scenario-display {
+    background-color: #fef9e7;
+    border: 1px solid #f9e79f;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+/* --- תיקון העיצוב של אזור ניתוח ה-AI --- */
 #ai-analyzer-section {
     background-color: var(--light-text);
     padding: 2rem;
@@ -128,42 +134,43 @@ hr {
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
+#ai-analyzer-form label {
+    display: block; /* ודא שהתווית תופסת שורה שלמה */
+    margin-bottom: 0.75rem; /* הגדלת רווח */
+    font-weight: bold;
+    text-align: right; /* יישור לימין */
+}
+
+#ai-analyzer-form textarea {
+    display: block; /* ודא שתיבת הטקסט תופסת שורה שלמה */
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+}
+
 #ai-analyzer-form button {
+    display: block; /* ודא שהכפתור תופס שורה שלמה */
+    width: 100%;
+    padding: 0.75rem;
     background-color: var(--main-green);
+    color: var(--light-text);
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 #ai-analyzer-form button:hover {
-    background-color: #005a5b; /* גוון מעט כהה יותר */
+    background-color: #005a5b;
 }
+/* --- סוף התיקון --- */
 
-#ai-result-container {
-    margin-top: 1.5rem;
-    padding: 1rem;
-    background-color: #f8f9fa;
-    border-radius: 4px;
-    min-height: 50px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
 
-.analyzer-message {
-    padding: 0.75rem 1rem;
-    border-radius: 16px;
-    max-width: 90%;
-    word-wrap: break-word;
-    line-height: 1.5;
-    white-space: pre-wrap;
-}
-
-.analyzer-user {
-    align-self: flex-end;
-    background-color: #e6f3f3;
-    text-align: right;
-}
-
-.analyzer-ai {
-    align-self: flex-start;
-    background-color: #e9ecef;
-    text-align: left;
-}
+#
