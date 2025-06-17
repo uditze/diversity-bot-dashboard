@@ -2,15 +2,15 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { supabase } from './supabaseClient.js';
+import { getAllScenarios } from './scenario-parser.js';
 
 dotenv.config();
 
 const app = express();
 
-// ✅ הגדרות CORS מעודכנות
-// כאן אנו אומרים לשרת לאשר בקשות שמגיעות מהכתובת של אתר הדשבורד שלנו
+// הגדרות CORS
 const corsOptions = {
-  origin: 'https://diversity-bot-dashboard.onrender.com' 
+  origin: 'https://diversity-bot-dashboard.onrender.com'
 };
 app.use(cors(corsOptions));
 
@@ -77,6 +77,17 @@ app.get('/api/sessions/:sessionId', async (req, res) => {
   } catch (error) {
     console.error(`Error fetching session ${req.params.sessionId}:`, error.message);
     res.status(500).json({ error: 'Failed to fetch session data' });
+  }
+});
+
+// ENDPOINT 4: קבלת כל התרחישים
+app.get('/api/scenarios', (req, res) => {
+  try {
+    const scenarios = getAllScenarios();
+    res.json(scenarios);
+  } catch (error) {
+    console.error('Error fetching scenarios:', error.message);
+    res.status(500).json({ error: 'Failed to fetch scenarios' });
   }
 });
 
