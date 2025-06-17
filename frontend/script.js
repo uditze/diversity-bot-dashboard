@@ -6,18 +6,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function fetchMetrics() {
   const API_URL = 'https://dashboard-backend-l9uh.onrender.com';
-  const metricsContainer = document.getElementById('metrics-container');
+  const interactionCountContainer = document.getElementById('interaction-count-container');
+  const sessionCountContainer = document.getElementById('session-count-container');
+
   try {
     const response = await fetch(`${API_URL}/api/metrics`);
     if (!response.ok) throw new Error('Network response was not ok');
+    
+    // קבלת האובייקט המכיל את שני המדדים
     const data = await response.json();
-    metricsContainer.innerHTML = `
+
+    // הצגת מספר השיחות בתיבה העליונה
+    sessionCountContainer.innerHTML = `
+      <h2>מספר שיחות של משתמשים עם הבוט</h2>
+      <strong class="metrics-number">${data.totalSessions}</strong>
+    `;
+    
+    // הצגת מספר האינטראקציות בתיבה התחתונה
+    interactionCountContainer.innerHTML = `
       <h2>מספר האינטראקציות עם הבוט</h2>
       <strong class="metrics-number">${data.totalInteractions}</strong>
     `;
+
   } catch (error) {
+    const errorMessage = `<p>שגיאה בטעינת הנתונים.</p>`;
+    interactionCountContainer.innerHTML = errorMessage;
+    sessionCountContainer.innerHTML = errorMessage;
     console.error('Failed to fetch metrics:', error);
-    metricsContainer.innerHTML = `<p>שגיאה בטעינת הנתונים.</p>`;
   }
 }
 
@@ -58,13 +73,8 @@ function initializeAiAnalyzer() {
     aiResultContainer.innerHTML = '';
     chatHistory.forEach(message => {
       const messageDiv = document.createElement('div');
-      
-      // --- כאן נמצא השינוי המרכזי ---
-      // חזרנו להשתמש בעיצוב הכללי של הודעות: user ו-bot
-      // התפקיד 'ai' יקבל את העיצוב של 'bot'
       const roleClass = message.role === 'user' ? 'user' : 'bot';
       messageDiv.className = `message ${roleClass}`;
-      
       messageDiv.textContent = message.content;
       aiResultContainer.appendChild(messageDiv);
     });
